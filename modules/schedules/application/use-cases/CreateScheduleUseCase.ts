@@ -18,7 +18,7 @@ export class CreateScheduleUseCase {
 
     const existing = await this.scheduleRepository.findByTimeAndRoute(input.time, input.routeId);
     if (existing) throw new Error("Ya existe ese horario en esta ruta.");
-
+//Vance
     return this.scheduleRepository.create(input);
   }
 }
