@@ -79,7 +79,7 @@ export function MapView() {
         allLatLngs.push([route.origin_latitude, route.origin_longitude]);
       }
 
-      // Paradas intermedias 
+      // Paradas 
       const { data: stops } = await supabase
         .from("stops")
         .select("*")
