@@ -50,9 +50,6 @@ export function RouteForm({ route, onSuccess, onCancel }: RouteFormProps) {
       geocode(destinationAddress),
     ]);
 
-    console.log("Origin coords:", originCoords);
-    console.log("Destination coords:", destinationCoords);
-
     if (!originCoords) {
       setError("No se encontró la dirección de origen. Intenta ser más específico.");
       setLoading(false);
@@ -133,6 +130,23 @@ export function RouteForm({ route, onSuccess, onCancel }: RouteFormProps) {
           className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <p className="text-xs text-gray-400">Formato: Ciudad, Estado, México</p>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-semibold text-gray-700">Precio del boleto</label>
+        <div className="relative">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold">$</span>
+          <input
+            name="price"
+            type="number"
+            step="0.01"
+            min="0"
+            required
+            defaultValue={route?.price ?? ""}
+            placeholder="0.00"
+            className="w-full border border-gray-300 rounded-xl pl-8 pr-4 py-3 text-sm text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-1">

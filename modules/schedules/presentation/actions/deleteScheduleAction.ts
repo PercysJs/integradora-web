@@ -9,7 +9,7 @@ export async function deleteScheduleAction(id: string) {
     const useCase = new DeleteScheduleUseCase(repository);
     await useCase.execute(id);
     return { success: true, message: "Horario eliminado correctamente." };
-  } catch (error: any) {
-    return { success: false, message: error.message };
+  } catch (error: unknown) {
+    return { success: false, message: (error as Error).message };
   }
 }

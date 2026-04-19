@@ -27,6 +27,7 @@ export function RouteTable({ routes, onEdit, onDelete }: RouteTableProps) {
           <tr className="border-b border-gray-100">
             <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">N° Unidad</th>
             <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Ruta</th>
+            <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Precio</th>
             <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Estado</th>
             <th className="text-right py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wide">Acciones</th>
           </tr>
@@ -36,6 +37,11 @@ export function RouteTable({ routes, onEdit, onDelete }: RouteTableProps) {
             <tr key={route.id} className="hover:bg-gray-50 transition">
               <td className="py-4 px-4 font-medium text-gray-800">{route.unitNumber}</td>
               <td className="py-4 px-4 text-gray-600">{route.route}</td>
+              <td className="py-4 px-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700">
+                  ${(route.price ?? 0).toFixed(2)}
+                </span>
+              </td>
               <td className="py-4 px-4">
                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
                   ${route.status === "Activa"

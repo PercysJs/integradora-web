@@ -21,6 +21,7 @@ export function ScheduleForm({ schedule, onSuccess, onCancel }: ScheduleFormProp
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [routes, setRoutes] = useState<RouteOption[]>([]);
+  const [selectedRouteId, setSelectedRouteId] = useState(schedule?.routeId ?? "");
 
   useEffect(() => {
     async function loadRoutes() {
@@ -31,8 +32,8 @@ export function ScheduleForm({ schedule, onSuccess, onCancel }: ScheduleFormProp
         .order("unit_number", { ascending: true });
 
       if (data) {
-        setRoutes(data.map((r: any) => ({
-          id: r.id,
+        setRoutes(data.map((r: Record<string, unknown>) => ({
+          id: r.id as string,
           label: `Unidad ${r.unit_number} - ${r.route}`,
         })));
       }
@@ -61,27 +62,34 @@ export function ScheduleForm({ schedule, onSuccess, onCancel }: ScheduleFormProp
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-semibold text-gray-700">
-          Ruta
-        </label>
-        <select
-          name="routeId"
-          required
-          defaultValue={schedule?.routeId ?? ""}
-          className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="" disabled>Selecciona una ruta activa</option>
-          {routes.map((r) => (
-            <option key={r.id} value={r.id}>{r.label}</option>
-          ))}
-        </select>
+        <label className="text-sm font-semibold text-gray-700">Ruta</label>
+        {schedule ? (
+          <>
+            <input type="hidden" name="routeId" value={selectedRouteId} />
+            <div className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 bg-gray-50">
+              {schedule.routeName}
+            </div>
+          </>
+        ) : (
+          <select
+            name="routeId"
+            required
+            value={selectedRouteId}
+            onChange={(e) => setSelectedRouteId(e.target.value)}
+            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" disabled>Selecciona una ruta activa</option>
+            {routes.map((r) => (
+              <option key={r.id} value={r.id}>{r.label}</option>
+            ))}
+          </select>
+        )}
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-semibold text-gray-700">
-          Hora de salida
-        </label>
+        <label className="text-sm font-semibold text-gray-700">Hora de salida</label>
         <input
           name="time"
           type="time"
@@ -114,6 +122,7 @@ export function ScheduleForm({ schedule, onSuccess, onCancel }: ScheduleFormProp
           {loading ? "Guardando..." : schedule ? "Actualizar" : "Crear horario"}
         </button>
       </div>
+
     </form>
   );
 }

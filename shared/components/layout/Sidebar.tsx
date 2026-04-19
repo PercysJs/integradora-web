@@ -41,6 +41,15 @@ const menuItems = [
       </svg>
     ),
   },
+  {
+    label: "Boletos",
+    href: "/tickets",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+      </svg>
+    ),
+  },
 ];
 
 export function Sidebar() {
@@ -48,8 +57,6 @@ export function Sidebar() {
 
   return (
     <aside className="w-64 bg-blue-800 min-h-screen fixed top-0 left-0 z-20 flex flex-col">
-
-      {}
       <nav className="flex flex-col gap-1 px-3 py-6 flex-1">
         {menuItems.map((item) => {
           const isActive = pathname === item.href;
@@ -69,14 +76,9 @@ export function Sidebar() {
           );
         })}
       </nav>
-
-      {}
       <div className="px-6 py-4 border-t border-blue-700">
-        <p className="text-blue-400 text-xs text-center">
-        
-        </p>
+        <p className="text-blue-400 text-xs text-center"></p>
       </div>
-
     </aside>
   );
 }

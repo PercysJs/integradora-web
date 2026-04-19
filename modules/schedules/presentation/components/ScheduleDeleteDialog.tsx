@@ -36,7 +36,7 @@ export function ScheduleDeleteDialog({ scheduleId, scheduleTime, onSuccess, onCa
       <div className="text-center">
         <h3 className="text-lg font-bold text-gray-800">¿Eliminar horario?</h3>
         <p className="text-sm text-gray-500 mt-1">
-          Estás por eliminar el horario de las <span className="font-semibold text-gray-700">"{scheduleTime}"</span>. Esta acción no se puede deshacer.
+          Estás por eliminar el horario de las <span className="font-semibold text-gray-700">&quot;{scheduleTime}&quot;</span>. Esta acción no se puede deshacer.
         </p>
       </div>
 

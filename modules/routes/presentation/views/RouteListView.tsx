@@ -25,18 +25,19 @@ export function RouteListView() {
       .order("created_at", { ascending: false });
 
     if (data) {
-      setRoutes(data.map((r: any) => ({
-        id: r.id,
-        unitNumber: r.unit_number,
-        route: r.route,
-        status: r.status,
-        originAddress: r.origin_address,
-        originLatitude: r.origin_latitude,
-        originLongitude: r.origin_longitude,
-        destinationAddress: r.destination_address,
-        destinationLatitude: r.destination_latitude,
-        destinationLongitude: r.destination_longitude,
-        createdAt: new Date(r.created_at),
+      setRoutes(data.map((r: Record<string, unknown>) => ({
+        id: r.id as string,
+        unitNumber: r.unit_number as string,
+        route: r.route as string,
+        status: r.status as "Activa" | "Inactiva",
+        price: (r.price as number) ?? 0,
+        originAddress: r.origin_address as string | undefined,
+        originLatitude: r.origin_latitude as number | undefined,
+        originLongitude: r.origin_longitude as number | undefined,
+        destinationAddress: r.destination_address as string | undefined,
+        destinationLatitude: r.destination_latitude as number | undefined,
+        destinationLongitude: r.destination_longitude as number | undefined,
+        createdAt: new Date(r.created_at as string),
       })));
     }
     setLoading(false);
@@ -44,6 +45,7 @@ export function RouteListView() {
 
   useEffect(() => {
     loadRoutes();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filtered = routes.filter((r) =>
@@ -119,7 +121,7 @@ export function RouteListView() {
         )}
       </div>
 
-      {/* Modal CrearyEditar */}
+      {/* Modal Crear/Editar */}
       {showForm && (
         <Modal
           title={selectedRoute ? "Editar ruta" : "Nueva ruta"}
@@ -133,7 +135,7 @@ export function RouteListView() {
         </Modal>
       )}
 
-      {/* Modal del Eliminar */}
+      {/* Modal Eliminar */}
       {showDelete && selectedRoute && (
         <Modal title="Confirmar eliminación" onClose={handleCloseDelete}>
           <RouteDeleteDialog

@@ -42,6 +42,13 @@ export class RouteRepository implements IRouteRepository {
         unit_number: input.unitNumber,
         route: input.route,
         status: input.status,
+        price: input.price,
+        origin_address: input.originAddress,
+        origin_latitude: input.originLatitude,
+        origin_longitude: input.originLongitude,
+        destination_address: input.destinationAddress,
+        destination_latitude: input.destinationLatitude,
+        destination_longitude: input.destinationLongitude,
       })
       .select()
       .single();
@@ -57,6 +64,13 @@ export class RouteRepository implements IRouteRepository {
         ...(input.unitNumber && { unit_number: input.unitNumber }),
         ...(input.route && { route: input.route }),
         ...(input.status && { status: input.status }),
+        ...(input.price !== undefined && { price: input.price }),
+        ...(input.originAddress && { origin_address: input.originAddress }),
+        ...(input.originLatitude && { origin_latitude: input.originLatitude }),
+        ...(input.originLongitude && { origin_longitude: input.originLongitude }),
+        ...(input.destinationAddress && { destination_address: input.destinationAddress }),
+        ...(input.destinationLatitude && { destination_latitude: input.destinationLatitude }),
+        ...(input.destinationLongitude && { destination_longitude: input.destinationLongitude }),
       })
       .eq("id", id)
       .select()
@@ -74,13 +88,20 @@ export class RouteRepository implements IRouteRepository {
 
     if (error) throw new Error(error.message);
   }
-
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
   private mapToEntity(data: any): Route {
     return {
       id: data.id,
       unitNumber: data.unit_number,
       route: data.route,
       status: data.status,
+      price: data.price ?? 0,
+      originAddress: data.origin_address,
+      originLatitude: data.origin_latitude,
+      originLongitude: data.origin_longitude,
+      destinationAddress: data.destination_address,
+      destinationLatitude: data.destination_latitude,
+      destinationLongitude: data.destination_longitude,
       createdAt: new Date(data.created_at),
     };
   }

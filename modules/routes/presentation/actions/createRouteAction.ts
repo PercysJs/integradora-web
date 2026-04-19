@@ -6,6 +6,7 @@ export async function createRouteAction(formData: FormData) {
   const unitNumber = formData.get("unitNumber") as string;
   const route = formData.get("route") as string;
   const status = formData.get("status") as "Activa" | "Inactiva";
+  const price = parseFloat(formData.get("price") as string);
   const originAddress = formData.get("originAddress") as string;
   const originLatitude = formData.get("originLatitude");
   const originLongitude = formData.get("originLongitude");
@@ -20,6 +21,7 @@ export async function createRouteAction(formData: FormData) {
         unit_number: unitNumber,
         route: route,
         status: status,
+        price: price,
         origin_address: originAddress,
         origin_latitude: originLatitude ? parseFloat(originLatitude as string) : null,
         origin_longitude: originLongitude ? parseFloat(originLongitude as string) : null,
@@ -30,7 +32,7 @@ export async function createRouteAction(formData: FormData) {
 
     if (error) throw new Error(error.message);
     return { success: true, message: "Ruta creada correctamente." };
-  } catch (error: any) {
-    return { success: false, message: error.message };
+  } catch (error: unknown) {
+    return { success: false, message: (error as Error).message };
   }
 }

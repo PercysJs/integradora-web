@@ -11,8 +11,17 @@ export class CreateRouteUseCase {
       throw new Error("Todos los campos son obligatorios.");
     }
 
-    const existing = await this.routeRepository.findByUnitNumber(input.unitNumber);
-    if (existing) throw new Error("Ya existe una ruta con ese número de unidad.");
+    if (!input.price || input.price <= 0) {
+      throw new Error("El precio del boleto debe ser mayor a $0.00.");
+    }
+
+    if (!input.originAddress) {
+      throw new Error("La dirección de origen es obligatoria.");
+    }
+
+    if (!input.destinationAddress) {
+      throw new Error("La dirección de destino es obligatoria.");
+    }
 
     return this.routeRepository.create(input);
   }
